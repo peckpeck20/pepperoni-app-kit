@@ -39,6 +39,7 @@ export const login = () => {
 
   return dispatch => {
     dispatch(requestLogin());
+     dispatch(loginSuccess({test:'user'}));
   }
 };
 
@@ -48,20 +49,20 @@ export default function UserStateReducer(state= initialState,action = {}) {
     case REQUEST_LOGIN:
       return state
         .set('loggingIn', true);
-
+        
     case LOGIN_SUCCESS:
-      return {
-        ...state,
-        loggingIn : false,
-        auth : true,
-        user : action.user
-      };
+      return state
+      .set('auth', true)
+      .set('loggingIn' , false)
+      .set('user', action.user);
     
     case LOGIN_FAIL:
-      return {
-        ...state,
-        loggingIn: false
-      };
+      return state
+      .set('loggingIn', false);   
+      // {
+      //   ...state,
+      //   loggingIn: false
+      // };
     case LOGOUT:
       return initialState
     
